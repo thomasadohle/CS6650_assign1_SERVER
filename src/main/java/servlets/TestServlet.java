@@ -12,7 +12,7 @@ public class TestServlet extends HttpServlet {
 
     public void init() throws ServletException {
         // Initialization
-        msg = "Hello World";
+        msg = "Nice to see you";
     }
 
     // handle a GET request
