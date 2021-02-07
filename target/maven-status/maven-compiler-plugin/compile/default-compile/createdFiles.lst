@@ -1,1 +1,4 @@
+servlets\PurchaseServlet.class
 servlets\TestServlet.class
+models\Purchase.class
+models\PurchaseItem.class
