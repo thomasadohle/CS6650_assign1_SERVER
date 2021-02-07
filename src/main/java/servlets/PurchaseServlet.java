@@ -2,6 +2,7 @@ package servlets;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import models.Purchase;
 
 import javax.servlet.ServletException;
@@ -47,9 +48,9 @@ public class PurchaseServlet extends HttpServlet {
     }
 
     private boolean postDataValid(HttpServletRequest req) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        Purchase purchase = mapper.readValue(req.getReader(), Purchase.class);
-
+        //ObjectMapper mapper = new ObjectMapper();
+        //Purchase purchase = mapper.readValue(req.getReader(), Purchase.class);
+        Purchase purchase = new Gson().fromJson(req.getReader(), Purchase.class);
         return false;
     }
 
