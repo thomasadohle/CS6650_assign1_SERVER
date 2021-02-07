@@ -11,6 +11,7 @@
     <title>$Title$</title>
   </head>
   <body>
+  <h1>New Version</h1>
   Sup ya'll
   </body>
 </html>
