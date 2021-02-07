@@ -1,13 +1,19 @@
 package servlets;
 
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import models.Purchase;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,28 +27,30 @@ public class PurchaseServlet extends HttpServlet {
         msg = "Welcome to PurchaseServlet";
     }
 
-    // handle a GET request
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (! urlValid(request)){
             //Return 400 response
             response.setStatus(400);
             return;
         }
-
-        // Set response content type to text
-        response.setContentType("text/html");
-
-        // sleep for 1000ms. You can vary this value for different tests
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (! postDataValid(request)){
+            response.setStatus(400);
+            return;
         }
 
+        // Set response content type to text
+        response.setContentType("application/json");
         // Send the response
         PrintWriter out = response.getWriter();
         out.println("<h1>" + msg + "</h1>");
+    }
+
+    private boolean postDataValid(HttpServletRequest req) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        Purchase purchase = mapper.readValue(req.getReader(), Purchase.class);
+
+        return false;
     }
 
     private boolean urlValid(HttpServletRequest req){
