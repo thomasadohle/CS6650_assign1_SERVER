@@ -12,6 +12,6 @@
   </head>
   <body>
   <h1>New Version</h1>
-  Sup ya'll
+  <h2>Sup ya'll</h2>
   </body>
 </html>
