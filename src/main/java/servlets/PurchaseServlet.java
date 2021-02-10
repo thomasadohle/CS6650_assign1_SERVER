@@ -1,8 +1,9 @@
 package servlets;
-//import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Purchase;
-import com.google.gson.Gson;
-
+import org.json.JSONObject;
+//import com.google.gson.Gson;
+import javax.json.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,38 +20,51 @@ import java.util.Map;
 
 public class PurchaseServlet extends HttpServlet {
 
-    private String msg;
+    private String successMsg;
+    private String failureMsg;
 
     public void init() throws ServletException {
         // Initialization
-        msg = "Welcome to PurchaseServlet";
+        successMsg = "Successful request";
+        failureMsg = "Unsuccessful request";
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        boolean validRequest = true;
         if (! urlValid(request)){
             //Return 400 response
             response.setStatus(400);
-            return;
+            validRequest = false;
         }
         if (! postDataValid(request)){
             response.setStatus(400);
-            return;
+            validRequest = false;
+        }
+        String message;
+        if (validRequest){
+            message = this.successMsg;
+        } else {
+            message = this.failureMsg;
         }
 
         // Set response content type to text
         response.setContentType("application/json");
         // Send the response
         PrintWriter out = response.getWriter();
-        out.println("<h1>" + msg + "</h1>");
+        String jsonString = new JSONObject().put("message", message).toString();
+        out.println(jsonString);
     }
 
     private boolean postDataValid(HttpServletRequest req) throws IOException {
-        //ObjectMapper mapper = new ObjectMapper();
-        //Purchase purchase = mapper.readValue(req.getReader(), Purchase.class);
-        Gson gson = new Gson();
-        Purchase p = gson.fromJson(req.getReader(), Purchase.class);
-        return false;
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Purchase purchase = mapper.readValue(req.getReader(), Purchase.class);
+        }
+        catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     private boolean urlValid(HttpServletRequest req){

@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Purchase;
+import javax.json.*;
 
 import java.io.IOException;
 
@@ -15,6 +16,7 @@ public class main {
                 "\t}]\n" +
                 "}";
         Purchase p = mapper.readValue(str, Purchase.class);
-        System.out.println(p);
+
+        //JsonObject empObject = Json.createObjectBuilder();
     }
 }

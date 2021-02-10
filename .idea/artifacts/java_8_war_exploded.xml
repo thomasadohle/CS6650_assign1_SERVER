@@ -7,6 +7,16 @@
         <element id="directory" name="classes">
           <element id="module-output" name="java_8" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Java EE 6-Java EE 6" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.0" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.6" />
+          <element id="library" level="project" name="Maven: javax.json:javax.json-api:1.1.4" />
+          <element id="library" level="project" name="Maven: org.glassfish:javax.json:1.1.4" />
+          <element id="library" level="project" name="Maven: org.json:json:20201115" />
+        </element>
       </element>
     </root>
   </artifact>
