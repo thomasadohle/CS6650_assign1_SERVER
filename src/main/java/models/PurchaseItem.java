@@ -1,14 +1,14 @@
 package models;
 
 public class PurchaseItem {
-    private String itemId;
-    private int numItems;
+    private String itemID;
+    private int numberOfItems;
 
-    public void setItemId(String itemId){
-        this.itemId = itemId;
+    public void setItemID(String itemID){
+        this.itemID = itemID;
     }
 
-    public void setNumItems(int numItems){
-        this.numItems = numItems;
+    public void setNumberOfItems(int numberOfItems){
+        this.numberOfItems = numberOfItems;
     }
 }
