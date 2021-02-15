@@ -8,4 +8,6 @@ public class Purchase {
     public void setItems(List<PurchaseItem> items){
         this.items = items;
     }
+
+    public List<PurchaseItem> getItems(){return this.items;}
 }

@@ -11,4 +11,7 @@ public class PurchaseItem {
     public void setNumberOfItems(int numberOfItems){
         this.numberOfItems = numberOfItems;
     }
+
+    public String getItemID(){return this.itemID;}
+    public int getNumberOfItems(){return this.numberOfItems;}
 }
