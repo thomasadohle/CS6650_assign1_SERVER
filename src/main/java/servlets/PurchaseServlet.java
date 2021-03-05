@@ -1,6 +1,7 @@
 package servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Purchase;
+import models.PurchaseItem;
 import org.json.JSONObject;
 //import com.google.gson.Gson;
 import javax.json.*;
@@ -25,6 +26,8 @@ public class PurchaseServlet extends HttpServlet {
     private String failureMsg;
     private Map<String, String> purchaseParamMap;
     private Connection cnxn;
+    int purchaseId;
+    private Purchase purchase;
 
     public void init() throws ServletException {
         // Initialization
@@ -61,6 +64,7 @@ public class PurchaseServlet extends HttpServlet {
             message = this.successMsg;
             try {
                 storePurchase();
+                storePurchaseItems();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -79,7 +83,9 @@ public class PurchaseServlet extends HttpServlet {
     private boolean postDataValid(HttpServletRequest req) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            Purchase purchase = mapper.readValue(req.getReader(), Purchase.class);
+            Purchase p = mapper.readValue(req.getReader(), Purchase.class);
+            purchase = p;
+
         }
         catch (Exception e) {
             return false;
@@ -148,15 +154,36 @@ public class PurchaseServlet extends HttpServlet {
 
     private void storePurchase() throws SQLException {
         Statement statement = cnxn.createStatement();
-        String query = "INSERT INTO purchase (store_id, client_id, purchase_date) VALUES(";
+        String query = "INSERT INTO purchase (store_id, customer_id, purchase_date) VALUES(";
         query += purchaseParamMap.get("storeId") + ",";
         query += purchaseParamMap.get("customerId") + ",";
         query += purchaseParamMap.get("date") + ");";
-        statement.executeUpdate(query);
+        statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+        ResultSet keys = statement.getGeneratedKeys();
+        keys.first();
+        purchaseId = keys.getInt(1);
+        statement.close();
+    }
+
+    private void storePurchaseItems() throws SQLException {
+        String query = "INSERT INTO purchase_item (purchase_id, item_id, num_items) VALUES (?,?,?)";
+        PreparedStatement statement = cnxn.prepareStatement(query);
+        for (PurchaseItem item: purchase.getItems()){
+            statement.setInt(1, purchaseId);
+            statement.setString(2, item.getItemID());
+            statement.setInt(3, item.getNumberOfItems());
+            statement.addBatch();
+        }
+        statement.executeBatch();
+        statement.close();
     }
 
 
     public void destroy() {
-        // nothing to do here
+        try {
+            cnxn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
