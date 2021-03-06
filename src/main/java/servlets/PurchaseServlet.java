@@ -40,7 +40,7 @@ public class PurchaseServlet extends HttpServlet {
         failureMsg = "Unsuccessful request";
         purchaseParamMap = new HashMap<>();
         try {
-            cnxn = DriverManager.getConnection("jdbc:mysql://localhost:3307/testdb", "root", "password");
+            cnxn = DriverManager.getConnection("jdbc:mysql://thomas-db.c64ylwt4ybkn.us-east-1.rds.amazonaws.com:3306/purchase", "admin", "icecoldnewenglandipa");
         } catch (SQLException e){
             e.printStackTrace();
         }
