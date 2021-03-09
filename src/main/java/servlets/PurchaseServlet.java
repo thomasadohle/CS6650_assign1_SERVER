@@ -2,6 +2,8 @@ package servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Purchase;
 import models.PurchaseItem;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 //import com.google.gson.Gson;
 import javax.json.*;
@@ -28,6 +30,8 @@ public class PurchaseServlet extends HttpServlet {
     private Connection cnxn;
     int purchaseId;
     private Purchase purchase;
+    private SQLException exception = null;
+    private Logger logger = LogManager.getLogger(PurchaseServlet.class);
 
     public void init() throws ServletException {
         // Initialization
@@ -43,12 +47,19 @@ public class PurchaseServlet extends HttpServlet {
             cnxn = DriverManager.getConnection("jdbc:mysql://thomas-db.c64ylwt4ybkn.us-east-1.rds.amazonaws.com:3306/purchase", "admin", "icecoldnewenglandipa");
         } catch (SQLException e){
             e.printStackTrace();
+            exception = e;
+            logger.error(e);
         }
     }
 
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (exception != null){
+            response.setStatus(401);
+            response.getWriter().write(exception.toString());
+            return;
+        }
         boolean validRequest = true;
         if (! urlValid(request)){
             //Return 400 response
@@ -78,6 +89,12 @@ public class PurchaseServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String jsonString = new JSONObject().put("message", message).toString();
         out.println(jsonString);
+    }
+
+    private void throwException() throws Exception {
+        if (exception != null){
+            throw new Exception(exception);
+        }
     }
 
     private boolean postDataValid(HttpServletRequest req) throws IOException {

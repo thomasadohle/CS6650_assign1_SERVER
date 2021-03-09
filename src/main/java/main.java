@@ -1,6 +1,8 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Purchase;
 import models.PurchaseItem;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.json.*;
 
@@ -42,13 +44,15 @@ public class main {
 //
 //        System.out.println(purch);
 
-        Connection cxn = DriverManager.getConnection("jdbc:mysql://localhost:3307/testdb", "root", "password");
-        Statement statement = cxn.createStatement();
-        ResultSet res = statement.executeQuery("SELECT * FROM purchase");
-
-        while (res.next()){
-            System.out.println(res.getString(2));
-        }
+//        Connection cxn = DriverManager.getConnection("jdbc:mysql://localhost:3307/testdb", "root", "password");
+//        Statement statement = cxn.createStatement();
+//        ResultSet res = statement.executeQuery("SELECT * FROM purchase");
+//
+//        while (res.next()){
+//            System.out.println(res.getString(2));
+//        }
+//        Logger logger = LogManager.getLogger(main.class);
+//        logger.error("hello error");
 
     }
 }

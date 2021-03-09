@@ -12,6 +12,6 @@
   </head>
   <body>
   <h1>New Version</h1>
-  <h2>Sup ya'll</h2>
+  <h2>Assignment 2 tho</h2>
   </body>
 </html>
