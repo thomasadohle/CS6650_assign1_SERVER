@@ -3,6 +3,12 @@
     <output-path>$PROJECT_DIR$/out/artifacts/java_8_war</output-path>
     <root id="archive" name="java_8_war.war">
       <element id="artifact" artifact-name="java_8:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-api/2.5/log4j-api-2.5.jar" />
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/org/apache/logging/log4j/log4j-core/2.5/log4j-core-2.5.jar" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>
